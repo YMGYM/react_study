@@ -3,7 +3,7 @@ import TodoListItem from './TodoListItem';
 
 class TodoList extends Component {
     render() {
-        const {todoList, onUpdate, btnFlag, buttonUpdate} = this.props;
+        const {todoList, onUpdate, btnFlag} = this.props;
         console.log(todoList); // array
 
         // for문... 은 불변성을 지키기 위해 사용안함
@@ -16,7 +16,7 @@ class TodoList extends Component {
                     {todoList.map((data) => {
                         // return <li onClick = {() => onUpdate(data.id, data.context)} key={data.id}>{data.context}<button>수정</button></li> // 배열에 key값을 가지기를 권장함
                         // return <li key={data.id} ><TodoListItem context={data.context} /></li>
-                        return <TodoListItem onClick={onUpdate} context={data} btnFlag={btnFlag} buttonUpdate={buttonUpdate} />
+                        return <TodoListItem onClick={onUpdate} context={data} btnFlag={btnFlag}/>
                     })}
                 </ul>
             </div>
