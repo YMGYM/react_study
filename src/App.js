@@ -21,8 +21,16 @@ class App extends Component{
 
 
   handleUpdate = (id, context) => {
-    console.log(id, context);
+    const {todoList} = this.state;
+    this.setState({
+      todoList: [
+        ...todoList.splice(0, id),
+        {id, context},
+        ...todoList.splice(id + 1, todoList.length - 1)
+      ]
+    });
   }
+
 
   handleChange = (e) => {
     this.setState({
@@ -41,11 +49,24 @@ class App extends Component{
     this.id++;
   };
 
+  handleDestroy = (id) => {
+    const {todoList} = this.state;
+
+    this.setState({
+      todoList: [
+        ...this.state.todoList.slice(0, id),
+        ...this.state.todoList.slice(id+1)
+      ]
+    });
+    
+    console.log(this.state);
+    
+  }
 
 
   render(){
-    const {todoList, btnFlag} = this.state;
-    const {handleUpdate} = this;
+    const {todoList} = this.state;
+    const {handleUpdate, handleDestroy} = this;
     return(
       <div>
         <h2>새로운 할 일 추가</h2>
@@ -53,7 +74,7 @@ class App extends Component{
         <button onClick={this.handleCreate}>추가</button>
         <h2>오늘은 꼭 하자 ㅜㅜ</h2>
 
-        <TodoList todoList={todoList} onUpdate={handleUpdate} btnFlag={btnFlag}/>
+        <TodoList todoList={todoList} onUpdate={handleUpdate} onDestroy={handleDestroy}/>
 
         {/* <TodoInput /> */}
       </div>
