@@ -2,6 +2,8 @@ import './App.css';
 
 import React, {Component} from 'react';
 import TodoList from './components/TodoList';
+import TodoInput from './components/TodoInput';
+
 // import TodoInput from './components/TodoInput';
 
 // 객체형 호출(함수형 호출보다 편리)
@@ -23,12 +25,19 @@ class App extends Component{
   handleUpdate = (id, context) => {
     const {todoList} = this.state;
     this.setState({
-      todoList: [
-        ...todoList.splice(0, id),
-        {id, context},
-        ...todoList.splice(id + 1, todoList.length - 1)
-      ]
+      // todoList: [
+      //   ...todoList.splice(0, id),
+      //   {id, context},
+      //   ...todoList.splice(id + 1, todoList.length - 1)
+      // ]
+      todoList: todoList.map((data) => {
+        if(data.id === id){
+          data.context = context;
+        }
+        return data;
+      })
     });
+
   }
 
 
@@ -53,14 +62,12 @@ class App extends Component{
     const {todoList} = this.state;
 
     this.setState({
-      todoList: [
-        ...this.state.todoList.slice(0, id),
-        ...this.state.todoList.slice(id+1)
-      ]
+      // todoList: [
+      //   ...this.state.todoList.slice(0, id),
+      //   ...this.state.todoList.slice(id+1)
+      // ]
+      todoList: todoList.filter((data) => data.id !== id)
     });
-    
-    console.log(this.state);
-    
   }
 
 
@@ -73,10 +80,9 @@ class App extends Component{
         <input type="text" placeholder="내용추가" value={this.state.value} onChange={this.handleChange} />
         <button onClick={this.handleCreate}>추가</button>
         <h2>오늘은 꼭 하자 ㅜㅜ</h2>
-
+        {console.log(todoList)}
         <TodoList todoList={todoList} onUpdate={handleUpdate} onDestroy={handleDestroy}/>
-
-        {/* <TodoInput /> */}
+        <TodoInput value={this.state.value}/>
       </div>
     );
   }

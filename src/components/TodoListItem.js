@@ -7,9 +7,10 @@ class TodoListItem extends Component {
         context: ''
     };
 
-    ButtonUpdate = () => {
+    ButtonUpdate = (context) => {
         this.setState({
-            btnFlag: !this.state.btnFlag
+            btnFlag: !this.state.btnFlag,
+            context: context
         })
     };
     
@@ -38,16 +39,17 @@ class TodoListItem extends Component {
     
     render() {
         const {btnFlag} = this.state;        
-        const {context, onDestroy} = this.props;
+        const {data, onDestroy} = this.props;
         const {ButtonUpdate, HandleUpdate, HandleChange} = this;
         const btnText = btnFlag ? "확인" : "수정";
         return (
             <div>
-                <li key= {context.id}>
-                {btnFlag ? <input onChange={HandleChange} value={this.context.context}/> : context.context }
-                {btnFlag ? <button onClick={() => HandleUpdate(context.id)}>확인</button>
-                : <button onClick={() => ButtonUpdate()}>수정</button>}
-                <button onClick={() => this.HandleDestroy(context.id)}>삭제</button>
+                <li key= {data.id}>
+                    {console.log(data)}
+                {btnFlag ? <input onChange={HandleChange} value={this.state.context}/> : data.context }
+                {btnFlag ? <button onClick={() => HandleUpdate(data.id)}>확인</button>
+                : <button onClick={() => ButtonUpdate(data.context)}>수정</button>}
+                <button onClick={() => this.HandleDestroy(data.id)}>삭제</button>
                 </li>
                 
             </div>
@@ -56,3 +58,4 @@ class TodoListItem extends Component {
 }
 
 export default TodoListItem;
+
